@@ -4,5 +4,5 @@
 class PlayerPaddle : public VisibleGameObject {
 public:
 	PlayerPaddle();
-	PlayerPaddle();
+	~PlayerPaddle();
 };

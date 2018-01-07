@@ -7,6 +7,10 @@ void Game::Start() {
 	if (_gameState != Uninitialized)
 		return;
 	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Pang!");
+	
+	_player1.load("images/Paddle.png");
+	_player1.setPosition((1024 / 2) - 4, 700);
+
 	_gameState = Game::ShowingSplash;
 
 	while (!isExiting()) {
@@ -39,6 +43,7 @@ void Game::gameLoop() {
 			case Game::Playing:
 			{
 				_mainWindow.clear(sf::Color(0, 0, 0));
+				_player1.draw(_mainWindow);
 				_mainWindow.display();
 
 				if (currentEvent.type == sf::Event::Closed)
@@ -79,3 +84,4 @@ void Game::showMenu() {
 
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
+PlayerPaddle Game::_player1;
