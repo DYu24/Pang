@@ -10,6 +10,6 @@ public:
 	float getVelocity() const;
 
 private:
-	float _velocity;
+	float _velocity; //negative for left, positive for right
 	float _maxVelocity;
 };

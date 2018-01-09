@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PlayerPaddle.h"
+#include "Game.h"
 
 PlayerPaddle::PlayerPaddle() : _velocity(0), _maxVelocity(600.0f) {
 	load("images/Paddle.png");
@@ -18,11 +19,11 @@ float PlayerPaddle::getVelocity() const {
 }
 
 void PlayerPaddle::update(float elapsedTime) {
-	if (Game::getInput().isKeyDown(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		_velocity -= 3.0f;
-	if (Game::getInput().isKeyDown(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		_velocity += 3.0f;
-	if (Game::getInput().isKeyDown(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		_velocity = 0.0f;
 	if (_velocity > _maxVelocity)
 		_velocity = _maxVelocity;

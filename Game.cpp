@@ -7,11 +7,11 @@ void Game::Start() {
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Pang!");
+	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Pang!");
 	
 	PlayerPaddle* player1 = new PlayerPaddle();
 	player1->load("images/Paddle.png");
-	player1->setPosition((1024 / 2) - 45, 700);
+	player1->setPosition((SCREEN_WIDTH / 2), 700);
 
 	_gameObjectManager.add("Paddle1", player1);
 	_gameState = Game::ShowingSplash;
@@ -27,6 +27,10 @@ bool Game::isExiting() {
 		return true;
 	else
 		return false;
+}
+
+sf::RenderWindow& Game::getWindow() {
+	return _mainWindow;
 }
 
 void Game::gameLoop() {
