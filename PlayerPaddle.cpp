@@ -21,9 +21,9 @@ float PlayerPaddle::getVelocity() const {
 void PlayerPaddle::update(float elapsedTime) {
 	float velocityCap = _maxVelocity * elapsedTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_velocity -= 250.0f * elapsedTime;
+		_velocity -= 2500.0f * elapsedTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_velocity += 250.0f * elapsedTime;
+		_velocity += 2500.0f * elapsedTime;
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		_velocity = 0.0f;
 	if (_velocity > velocityCap)
