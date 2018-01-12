@@ -242,5 +242,5 @@ ModelManifest.xml
 .fake/
 
 # SFML2.4.2
-.SFML-2.4.2/
+SFML-2.4.2/
 sfml-*.dll
