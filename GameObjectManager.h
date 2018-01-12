@@ -10,6 +10,7 @@ public:
 	int getObjectCount() const;
 	VisibleGameObject* get(std::string name) const;
 	void drawAll(sf::RenderWindow& renderWindow);
+	void updateAll(float elapsedTime);
 
 private:
 	std::map<std::string, VisibleGameObject*> _gameObjects;

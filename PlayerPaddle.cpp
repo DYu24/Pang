@@ -2,10 +2,10 @@
 #include "PlayerPaddle.h"
 #include "Game.h"
 
-PlayerPaddle::PlayerPaddle() : _velocity(0), _maxVelocity(600.0f) {
+PlayerPaddle::PlayerPaddle() : _velocity(0), _maxVelocity(100000.0f) {
 	load("images/Paddle.png");
 	assert(isLoaded());
-	getSprite().setOrigin(getSprite().getScale().x / 2, getSprite().getScale().y / 2);
+	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
 }
 
 PlayerPaddle::~PlayerPaddle() {}
@@ -19,21 +19,25 @@ float PlayerPaddle::getVelocity() const {
 }
 
 void PlayerPaddle::update(float elapsedTime) {
+	float velocityCap = _maxVelocity * elapsedTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_velocity -= 3.0f;
+		_velocity -= 250.0f * elapsedTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_velocity += 3.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		_velocity += 250.0f * elapsedTime;
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		_velocity = 0.0f;
-	if (_velocity > _maxVelocity)
-		_velocity = _maxVelocity;
-	if (_velocity < -_maxVelocity)
-		_velocity = -_maxVelocity;
+	if (_velocity > velocityCap)
+		_velocity = velocityCap;
+	if (_velocity < -velocityCap)
+		_velocity = -velocityCap;
 
 	sf::Vector2f position = this->getPosition();
 
-	if (position.x < getSprite().getScale().x / 2 || position.x >(Game::SCREEN_WIDTH - getSprite().getScale().x / 2))
-		_velocity = -_velocity; //Bounce by current velocity but in the opposite direction
+	//Stop at edge of window
+	if (position.x < getSprite().getGlobalBounds().width / 2)
+		_velocity = (getSprite().getGlobalBounds().width / 2) - position.x;
+	if (position.x > (Game::SCREEN_WIDTH - getSprite().getGlobalBounds().width / 2))
+		_velocity = (Game::SCREEN_WIDTH - getSprite().getGlobalBounds().width / 2) - position.x;
 
-	getSprite().move(_velocity * elapsedTime, 0);
+	getSprite().move(_velocity, 0);
 }

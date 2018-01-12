@@ -8,6 +8,7 @@ void Game::Start() {
 		return;
 
 	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Pang!");
+	_mainWindow.setFramerateLimit(60);
 	
 	PlayerPaddle* player1 = new PlayerPaddle();
 	player1->load("images/Paddle.png");
@@ -35,6 +36,7 @@ sf::RenderWindow& Game::getWindow() {
 
 void Game::gameLoop() {
 	sf::Event currentEvent;
+	sf::Clock clock;
 	while (_mainWindow.pollEvent(currentEvent)) {
 		switch (_gameState) {
 			case Game::ShowingMenu :
@@ -50,6 +52,8 @@ void Game::gameLoop() {
 			case Game::Playing:
 			{
 				_mainWindow.clear(sf::Color(0, 0, 0));
+				float elapsedTime = clock.restart().asSeconds();
+				_gameObjectManager.updateAll(elapsedTime);
 				_gameObjectManager.drawAll(_mainWindow);
 				_mainWindow.display();
 
@@ -58,11 +62,12 @@ void Game::gameLoop() {
 
 				if (currentEvent.type == sf::Event::KeyPressed)
 					if (currentEvent.key.code == sf::Keyboard::Escape)
-						showMenu;
+						showMenu();
 
 				break;
 			}
 		}
+
 	}
 }
 
