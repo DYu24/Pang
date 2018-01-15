@@ -44,3 +44,22 @@ sf::Sprite& VisibleGameObject::getSprite() {
 bool VisibleGameObject::isLoaded() const {
 	return _isLoaded;
 }
+
+float VisibleGameObject::getWidth() const {
+	return _sprite.getGlobalBounds().width;
+}
+
+float VisibleGameObject::getHeight() const {
+	return _sprite.getGlobalBounds().height;
+}
+
+sf::Rect<float> VisibleGameObject::getBoundingRect() const {
+	sf::FloatRect size = _sprite.getGlobalBounds();
+	sf::Vector2f position = _sprite.getPosition();
+	return sf::Rect<float>(
+		position.x - size.width / 2,
+		position.y - size.height / 2,
+		position.x + size.width / 2,
+		position.y + size.height / 2
+		);
+}

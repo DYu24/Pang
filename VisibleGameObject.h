@@ -9,6 +9,9 @@ public:
 	virtual void setPosition(float x, float y);
 	virtual sf::Vector2f getPosition() const;
 	virtual bool isLoaded() const;
+	virtual float getWidth() const;
+	virtual float getHeight() const;
+	virtual sf::Rect<float> getBoundingRect() const;
 
 protected:
 	sf::Sprite& getSprite();
