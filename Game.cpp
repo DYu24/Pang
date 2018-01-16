@@ -13,10 +13,14 @@ void Game::Start() {
 	PlayerPaddle* player1 = new PlayerPaddle();
 	player1->setPosition((SCREEN_WIDTH / 2), 700);
 
+	//AIPaddle* player2 = new AIPaddle();
+	//player2->setPosition((SCREEN_WIDTH / 2), 40);
+
 	GameBall* ball = new GameBall();
-	ball->setPosition((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+	ball->setPosition((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2) - 15);
 
 	_gameObjectManager.add("Paddle1", player1);
+	//_gameObjectManager.add("Paddle2", player2);
 	_gameObjectManager.add("Ball", ball);
 	_gameState = Game::ShowingSplash;
 

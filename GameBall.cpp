@@ -64,7 +64,6 @@ void GameBall::update(float elapsedTime) {
 			}
 			_velocity += 5.0f;
 		}
-
 		if (getPosition().y - getHeight() / 2 <= 0) {
 			_angle = 180 - _angle;
 			moveByY = -moveByY;
