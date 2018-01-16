@@ -54,6 +54,7 @@ float VisibleGameObject::getHeight() const {
 }
 
 sf::Rect<float> VisibleGameObject::getBoundingRect() const {
+	/*
 	sf::FloatRect size = _sprite.getGlobalBounds();
 	sf::Vector2f position = _sprite.getPosition();
 	return sf::Rect<float>(
@@ -62,4 +63,6 @@ sf::Rect<float> VisibleGameObject::getBoundingRect() const {
 		position.x + size.width / 2,
 		position.y + size.height / 2
 		);
+	*/
+	return _sprite.getGlobalBounds();
 }

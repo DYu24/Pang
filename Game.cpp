@@ -39,38 +39,34 @@ sf::RenderWindow& Game::getWindow() {
 
 void Game::gameLoop() {
 	sf::Event currentEvent;
-	sf::Clock clock;
-	while (_mainWindow.pollEvent(currentEvent)) {
-		switch (_gameState) {
-			case Game::ShowingMenu :
-			{
-				showMenu();
-				break;
-			}
-			case Game::ShowingSplash:
-			{
-				showSplashScreen();
-				break;
-			}
-			case Game::Playing:
-			{
-				_mainWindow.clear(sf::Color(0, 0, 0));
-				float elapsedTime = clock.restart().asSeconds();
-				_gameObjectManager.updateAll(elapsedTime);
-				_gameObjectManager.drawAll(_mainWindow);
-				_mainWindow.display();
-
-				if (currentEvent.type == sf::Event::Closed)
-					_gameState = Game::Exiting;
-
-				if (currentEvent.type == sf::Event::KeyPressed)
-					if (currentEvent.key.code == sf::Keyboard::Escape)
-						showMenu();
-
-				break;
-			}
+	_mainWindow.pollEvent(currentEvent);
+	switch (_gameState) {
+		case Game::ShowingMenu :
+		{
+			showMenu();
+			break;
 		}
+		case Game::ShowingSplash:
+		{
+			showSplashScreen();
+			break;
+		}
+		case Game::Playing:
+		{
+			_mainWindow.clear(sf::Color(0, 0, 0));
+			_gameObjectManager.updateAll();
+			_gameObjectManager.drawAll(_mainWindow);
+			_mainWindow.display();
 
+			if (currentEvent.type == sf::Event::Closed)
+				_gameState = Game::Exiting;
+
+			if (currentEvent.type == sf::Event::KeyPressed)
+				if (currentEvent.key.code == sf::Keyboard::Escape)
+					showMenu();
+
+			break;
+		}
 	}
 }
 
@@ -95,6 +91,10 @@ void Game::showMenu() {
 			break;
 		}
 	}
+}
+
+const GameObjectManager& Game::getGameObjectManager() {
+	return Game::_gameObjectManager;
 }
 
 Game::GameState Game::_gameState = Uninitialized;

@@ -39,8 +39,9 @@ void GameObjectManager::drawAll(sf::RenderWindow& renderWindow) {
 	}
 }
 
-void GameObjectManager::updateAll(float elapsedTime) {
+void GameObjectManager::updateAll() {
 	std::map<std::string, VisibleGameObject*>::const_iterator itr = _gameObjects.begin();
+	float elapsedTime = clock.restart().asSeconds();
 	while (itr != _gameObjects.end()) {
 		itr->second->update(elapsedTime);
 		itr++;
