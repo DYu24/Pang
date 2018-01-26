@@ -45,8 +45,8 @@ void GameBall::update(float elapsedTime) {
 			moveByY = -moveByY;
 
 			//ensure ball isn't inside the paddle
-			if (getBoundingRect().width > player1->getBoundingRect().top)
-				setPosition(getPosition().x, player1->getBoundingRect().top - getWidth() / 2 - 1);
+			if (getBoundingRect().height > player1->getBoundingRect().top)
+				setPosition(getPosition().x, player1->getBoundingRect().top - getHeight() / 2 - 1);
 
 			float playerVelocity = player1->getVelocity();
 
@@ -77,8 +77,57 @@ void GameBall::update(float elapsedTime) {
 			_elapsedTimeSinceStart = 0.0f;
 		}
 
-		getSprite().move(moveByX, moveByY);
+		//getSprite().move(moveByX, moveByY);
 	}
+
+	//get the Player 2's paddle
+	PlayerPaddle* player2 = dynamic_cast<PlayerPaddle*>(Game::getGameObjectManager().get("Paddle2"));
+	if (player2 != NULL) {
+		sf::Rect<float> p2BB = player2->getBoundingRect();
+		float paddleBottom = player2->getBoundingRect().top + player2->getHeight();
+		if (p2BB.intersects(getBoundingRect())) {
+			_angle = 360.0f - (_angle - 180.0f);
+			if (_angle > 360.0f)
+				_angle -= 360.0f;
+
+			moveByY = -moveByY;
+
+			//ensure ball isn't inside the paddle
+			if (getBoundingRect().height < paddleBottom)
+				setPosition(getPosition().x, paddleBottom + getHeight() / 2 - 1);
+
+			float playerVelocity = player2->getVelocity();
+
+			if (playerVelocity < 0) {
+				//moving left
+				_angle -= 20.0f;
+				if (_angle < 0)
+					_angle = 360.0f - _angle;
+			}
+			else if (playerVelocity > 0) {
+				//moving right
+				_angle += 20.0f;
+				if (_angle > 360.0f)
+					_angle = _angle - 360.0f;
+			}
+			_velocity += 5.0f;
+		}
+		if (getPosition().y - getHeight() / 2 <= 0) {
+			_angle = 180 - _angle;
+			moveByY = -moveByY;
+		}
+
+		if (getPosition().y + getHeight() / 2 + moveByY <= 0) {
+			//move to middle of the screen for now and randomize angle
+			getSprite().setPosition(Game::SCREEN_WIDTH / 2, Game::SCREEN_HEIGHT / 2);
+			_angle = (float)(rand() % 360 + 1);
+			_velocity = 500.0f;
+			_elapsedTimeSinceStart = 0.0f;
+		}
+
+		//getSprite().move(moveByX, moveByY);
+	}
+	getSprite().move(moveByX, moveByY);
 }
 
 float GameBall::linearVelocityX(float angle) {
