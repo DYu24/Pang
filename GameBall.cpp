@@ -33,7 +33,7 @@ void GameBall::update(float elapsedTime) {
 		moveByX = -moveByX;
 	}
 
-	//get the player's paddle
+	//get the Player 1's paddle
 	PlayerPaddle* player1 = dynamic_cast<PlayerPaddle*>(Game::getGameObjectManager().get("Paddle1"));
 	if (player1 != NULL) {
 		sf::Rect<float> p1BB = player1->getBoundingRect();

@@ -10,17 +10,17 @@ void Game::Start() {
 	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
 	
-	PlayerPaddle* player1 = new PlayerPaddle();
+	PlayerPaddle* player1 = new PlayerPaddle(1);
 	player1->setPosition((SCREEN_WIDTH / 2), 700);
 
-	//AIPaddle* player2 = new AIPaddle();
-	//player2->setPosition((SCREEN_WIDTH / 2), 40);
+	PlayerPaddle* player2 = new PlayerPaddle(2);
+	player2->setPosition((SCREEN_WIDTH / 2), 80);
 
 	GameBall* ball = new GameBall();
 	ball->setPosition((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2) - 15);
 
 	_gameObjectManager.add("Paddle1", player1);
-	//_gameObjectManager.add("Paddle2", player2);
+	_gameObjectManager.add("Paddle2", player2);
 	_gameObjectManager.add("Ball", ball);
 	_gameState = Game::ShowingSplash;
 

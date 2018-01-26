@@ -2,7 +2,7 @@
 #include "PlayerPaddle.h"
 #include "Game.h"
 
-PlayerPaddle::PlayerPaddle() : _velocity(0), _maxVelocity(1000.0f) {
+PlayerPaddle::PlayerPaddle(int player) : _player(player), _velocity(0), _maxVelocity(1000.0f) {
 	load("images/Paddle.png");
 	assert(isLoaded());
 	getSprite().setOrigin(getSprite().getGlobalBounds().width / 2, getSprite().getGlobalBounds().height / 2);
@@ -20,12 +20,22 @@ float PlayerPaddle::getVelocity() const {
 
 void PlayerPaddle::update(float elapsedTime) {
 	float velocityCap = _maxVelocity * elapsedTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		_velocity -= 25.0f * elapsedTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_velocity += 25.0f * elapsedTime;
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		_velocity = 0.0f;
+	if (_player == 1) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			_velocity -= 25.0f * elapsedTime;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			_velocity += 25.0f * elapsedTime;
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			_velocity = 0.0f;
+	}
+	else if (_player == 2) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			_velocity -= 25.0f * elapsedTime;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			_velocity += 25.0f * elapsedTime;
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			_velocity = 0.0f;
+	}
 	if (_velocity > velocityCap)
 		_velocity = velocityCap;
 	if (_velocity < -velocityCap)
