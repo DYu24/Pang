@@ -1,4 +1,7 @@
 # Pang
 Pong-inspired game written in C++.
 
-The game involves a single player, but can be extended to include another player.
+The game is played with two players.
+
+For Player 1, use the Left and Right arrow keys to move the bottom paddle.
+For Player 2, use the A and D keys to move the top paddle.
